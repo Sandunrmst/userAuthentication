@@ -12,7 +12,7 @@ export default function RecipeDetailsItem({getRecipeDetails}){
                 </div>
 
             </div>
-            <div className="flex flex-col md:flex-row lg:flex-row gap-5 lg:gap-10">
+            <div className="flex flex-col md:flex-row lg:flex-row gap-5 lg:gap-10 border-2 border-orange-500 p-3 rounded-md">
                 <div className="w-full">
                     <img 
                     src={getRecipeDetails?.image} 
