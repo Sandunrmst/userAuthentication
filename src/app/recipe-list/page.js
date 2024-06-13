@@ -15,5 +15,5 @@ async function fetchListOfRecipes(){
 export default async function Recipes(){
 
     const recipeList = await fetchListOfRecipes()
-    return <RecipeList/>
+    return <RecipeList recipeList={recipeList}/>
 }
