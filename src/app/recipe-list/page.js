@@ -1,6 +1,6 @@
 import RecipeList from "@/components/recipe-list";
 
-async function fetchListOfRecipes(){
+export async function fetchListOfRecipes(){
     try{
         const apiResponse =await fetch('https://dummyjson.com/recipes')
         const data = await apiResponse.json()
