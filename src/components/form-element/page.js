@@ -1,3 +1,5 @@
+import { Input } from "../ui/input";
+
 function CommonFormElement({ currentItem, value, onChange }) {
   let content = null;
 

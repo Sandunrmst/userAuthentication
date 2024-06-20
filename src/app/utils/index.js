@@ -21,3 +21,9 @@ export const userRegistrationFormControls = [
     type: "password",
   },
 ];
+
+export const initialSignUpFormData = {
+  userName: "",
+  email: "",
+  password: "",
+};
