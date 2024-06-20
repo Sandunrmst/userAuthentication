@@ -10,6 +10,11 @@ function SignUp() {
   const [signUpFormData, setSignUpFormData] = useState(initialSignUpFormData);
   console.log(signUpFormData);
 
+  function handleSignUpBtnValid() {
+    return Object.keys(signUpFormData).every(
+      (key) => signUpFormData[key].trim() !== ""
+    );
+  }
   return (
     <div>
       <h1>Welcome to registration</h1>
@@ -29,7 +34,13 @@ function SignUp() {
             />
           </div>
         ))}
-        <Button type="submit">Sign up</Button>
+        <Button
+          disabled={!handleSignUpBtnValid()}
+          className="disabled:opacity-65"
+          type="submit"
+        >
+          Sign up
+        </Button>
       </form>
     </div>
   );
