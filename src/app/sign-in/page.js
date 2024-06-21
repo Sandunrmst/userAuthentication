@@ -5,13 +5,25 @@ import { initialLoginFormData, userLoginFormControls } from "../utils";
 import CommonFormElement from "@/components/form-element/page";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { loginUserAction } from "@/actions";
+import { useRouter } from "next/router";
 
 const SignIn = () => {
   const [signInFormData, setSignInFormData] = useState(initialLoginFormData);
+
+  const router = useRouter();
+
+  async function handleSignIn() {
+    const result = await loginUserAction(signInFormData);
+    console.lgo(result);
+
+    if (result?.success) router.push("/");
+  }
+
   return (
     <div>
       <h1>Login</h1>
-      <form>
+      <form action={handleSignIn}>
         {userLoginFormControls.map((controlItem) => (
           <div key={controlItem.name}>
             <Label>{controlItem.label}</Label>
