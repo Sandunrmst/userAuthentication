@@ -15,7 +15,7 @@ const SignIn = () => {
 
   async function handleSignIn() {
     const result = await loginUserAction(signInFormData);
-    console.lgo(result);
+    console.log(result);
 
     if (result?.success) router.push("/");
   }
