@@ -1,7 +1,10 @@
 import { fetchAuthUserAction } from "@/actions";
+import Logout from "@/components/log-out";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const currentUser = await fetchAuthUserAction();
+  if (!currentUser?.success) redirect("/sign-in");
 
   return (
     <div className="w-full min-h-screenflex">
@@ -11,6 +14,7 @@ export default async function Home() {
 
       <h3>{currentUser?.data?.userName}</h3>
       <p>{currentUser?.data?.email}</p>
+      <Logout />
     </div>
   );
 }
