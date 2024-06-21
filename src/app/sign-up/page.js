@@ -5,20 +5,33 @@ import { initialSignUpFormData, userRegistrationFormControls } from "../utils";
 import CommonFormElement from "@/components/form-element/page";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { registerUserAction } from "@/actions";
+import { useRouter } from "next/navigation";
 
 function SignUp() {
   const [signUpFormData, setSignUpFormData] = useState(initialSignUpFormData);
-  console.log(signUpFormData);
+
+  const router = useRouter();
 
   function handleSignUpBtnValid() {
     return Object.keys(signUpFormData).every(
       (key) => signUpFormData[key].trim() !== ""
     );
   }
+
+  //for register user using server actions
+  async function handleSignUp() {
+    const result = await registerUserAction(signUpFormData);
+    console.log(result);
+    console.log(result?.data);
+
+    if (result?.data) router.push("/sign-in");
+  }
+
   return (
     <div>
       <h1>Welcome to registration</h1>
-      <form>
+      <form action={handleSignUp}>
         {userRegistrationFormControls.map((formControlItem) => (
           <div key={formControlItem.name}>
             <Label>{formControlItem.label}</Label>

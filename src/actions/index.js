@@ -18,14 +18,16 @@ export async function registerUserAction(formData) {
     }
 
     //password encrypt
-    const salt = bcryptjs.genSalt(10);
+    const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
+    //create new user with encrypted password
     const newlyCreatedUser = new User({
       userName,
       email,
       password: hashedPassword,
     });
+    //save user
     const saveUser = await newlyCreatedUser.save();
 
     if (saveUser) {
