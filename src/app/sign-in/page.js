@@ -6,7 +6,7 @@ import CommonFormElement from "@/components/form-element/page";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { loginUserAction } from "@/actions";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const SignIn = () => {
   const [signInFormData, setSignInFormData] = useState(initialLoginFormData);
