@@ -55,50 +55,49 @@ export async function registerUserAction(formData) {
 
 export async function loginUserAction(loginFormData) {
   await connectToDB();
-}
-try {
-  const { email, password } = loginFormData;
+  try {
+    const { email, password } = loginFormData;
 
-  //check user exits in DB
-  const checkUser = await User.findOne({ email });
-  if (!checkUser) {
+    //check if user exists in DB
+    const checkUser = await User.findOne({ email });
+    if (!checkUser) {
+      return {
+        success: false,
+        message: "User doesnot exist ! please sign up",
+      };
+    }
+
+    //check password is valid or not
+    const checkPassword = await bcryptjs.compare(password, checkUser.password);
+    if (!checkPassword) {
+      return {
+        message: "Password is incorrect please check",
+        success: false,
+      };
+    }
+    //create token for user
+    const createdTokenData = {
+      id: checkUser._id,
+      userName: checkUser.userName,
+      email: checkUser.email,
+    };
+
+    const token = jwt.sign(createdTokenData, "DEFAULT_KEY", {
+      expiresIn: "1d",
+    });
+    //save token in user browser
+    const getCookies = cookies();
+    getCookies.set("token", token);
+
+    return {
+      success: true,
+      message: "Login is successfull",
+    };
+  } catch (error) {
+    console.log(error);
     return {
       success: false,
-      message: "User does not exist! Please sign up",
+      message: "Something went wrong! please try again",
     };
   }
-
-  //check password is valid or not
-  const checkPassword = await bcryptjs.compare(password, checkUser.password);
-
-  if (!checkPassword) {
-    return {
-      success: false,
-      message: "Password is incorrect please check",
-    };
-  }
-
-  //create token for user
-  const createTokenData = {
-    id: checkUser._id,
-    userName: checkUser.userName,
-    email: checkUser.email,
-  };
-
-  const token = jwt.sign(createTokenData, "DEFAULT_KEY", { expiresIn: "1d" });
-
-  //save browser local storage
-  const getCookies = cookies();
-  getCookies.set("token", token);
-
-  return {
-    success: true,
-    message: "Login is sucessful!",
-  };
-} catch (error) {
-  console.log(error);
-  return {
-    success: false,
-    message: "Something wnet wrong! Please try again",
-  };
 }
