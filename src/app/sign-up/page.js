@@ -29,32 +29,36 @@ function SignUp() {
   }
 
   return (
-    <div>
-      <h1>Welcome to registration</h1>
-      <form action={handleSignUp}>
-        {userRegistrationFormControls.map((formControlItem) => (
-          <div key={formControlItem.name}>
-            <Label>{formControlItem.label}</Label>
-            <CommonFormElement
-              value={signUpFormData[formControlItem.name]}
-              currentItem={formControlItem}
-              onChange={(event) =>
-                setSignUpFormData({
-                  ...signUpFormData,
-                  [event.target.name]: event.target.value,
-                })
-              }
-            />
-          </div>
-        ))}
-        <Button
-          disabled={!handleSignUpBtnValid()}
-          className="disabled:opacity-65"
-          type="submit"
-        >
-          Sign up
-        </Button>
-      </form>
+    <div className="w-full flex justify-center items-center h-screen flex-col p-5">
+      <h1 className="text-black font-bold text-4xl text-center mt-6 ">
+        Welcome to registration
+      </h1>
+      <div className="w-full max-w-md p-5 shadow-md mt-5">
+        <form action={handleSignUp}>
+          {userRegistrationFormControls.map((formControlItem) => (
+            <div key={formControlItem.name}>
+              <Label>{formControlItem.label}</Label>
+              <CommonFormElement
+                value={signUpFormData[formControlItem.name]}
+                currentItem={formControlItem}
+                onChange={(event) =>
+                  setSignUpFormData({
+                    ...signUpFormData,
+                    [event.target.name]: event.target.value,
+                  })
+                }
+              />
+            </div>
+          ))}
+          <Button
+            disabled={!handleSignUpBtnValid()}
+            className="disabled:opacity-65 mt-5"
+            type="submit"
+          >
+            Sign up
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
