@@ -49,3 +49,42 @@ export async function registerUserAction(formData) {
     };
   }
 }
+
+export async function loginUserAction(loginFormData) {
+  await connectToDB();
+}
+try {
+  const { email, password } = loginFormData;
+
+  //check user exits in DB
+  const checkUser = await User.findOne({ email });
+  if (!checkUser) {
+    return {
+      success: false,
+      message: "User does not exist! Please sign up",
+    };
+  }
+
+  //check password is valid or not
+  const checkPassword = await bcryptjs.compare(password, checkUser.password);
+
+  if (!checkPassword) {
+    return {
+      success: false,
+      message: "Password is incorrect please check",
+    };
+  }
+
+  //create token for user
+  const createTokenData = {
+    id: checkUser._id,
+    userName: checkUser.userName,
+    email: checkUser.email,
+  };
+} catch (error) {
+  console.log(error);
+  return {
+    success: false,
+    message: "Something wnet wrong! Please try again",
+  };
+}
