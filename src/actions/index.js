@@ -4,6 +4,9 @@ import connectToDB from "@/database";
 import User from "@/models";
 import bcryptjs from "bcryptjs";
 
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+
 export async function registerUserAction(formData) {
   await connectToDB();
   try {
@@ -80,6 +83,17 @@ try {
     id: checkUser._id,
     userName: checkUser.userName,
     email: checkUser.email,
+  };
+
+  const token = jwt.sign(createTokenData, "DEFAULT_KEY", { expiresIn: "1d" });
+
+  //save browser local storage
+  const getCookies = cookies();
+  getCookies.set("token", token);
+
+  return {
+    success: true,
+    message: "Login is sucessful!",
   };
 } catch (error) {
   console.log(error);
